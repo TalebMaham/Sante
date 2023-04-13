@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MatiereController!{% endblock %}
+
+{% block body %}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Mes matieres :</h3>
+        </div>
+        <div class="card-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Numero</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Coiefficient</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Mathématiques</td>
+                <td>9</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>Physiques</td>
+                <td>8</td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>Sciences Naturelles</td>
+                <td>6</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

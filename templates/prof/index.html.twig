@@ -1,10 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProfController!{% endblock %}
+{% block title %}ProfApp{% endblock %}
 
 {% block body %}
 
-<h3>Bonjour {{user.nom}} voici tes eleves : </h3>
+{% if is_granted("ROLE_PROF") %}
+<h3>Bonjour  Doctor{{user.nom}} voici tes Patients : </h3>
 {% for eleve in eleves %}
 <div class="card mb-3 col-6 mx-auto" >
   <div class="card-header" {% if eleve.status == "beginner" %}style="background-color: red;" {% else %} {% if eleve.status == "intermediate" %}style="background-color: orange;" {% else %} {% if eleve.status == "advanced" %}style="background-color: green;"{% endif %}{% endif %}{% endif %}>
@@ -43,6 +44,39 @@
   </div>
 </div>
 {% endfor %}
+{% endif %}
+
+{% if is_granted("ROLE_STUDENT") %}
+
+<div class="card mb-3 col-6 mx-auto" >
+  <div class="card-header" {% if user.status == "beginner" %}style="background-color: red;" {% else %} {% if user.status == "intermediate" %}style="background-color: orange;" {% else %} {% if user.status == "advanced" %}style="background-color: green;"{% endif %}{% endif %}{% endif %}>
+    <h5 class="card-title">{{ user.prenom }} {{ user.nom }}</h5>
+  </div>
+  <div class="card-body">
+    <div class="container">
+      <table class="table table-striped">
+        <tbody>
+          <tr>
+            <th scope="row">Numéro</th>
+            <td>{{ user.id }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Notes</th>
+            <td>
+              <button class="btn btn-link" data-toggle="modal" data-target="#notesModal">notes</button>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Mail</th>
+            <td>{{ user.email }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endif %}
 
 
 
@@ -51,34 +85,9 @@
 
 
 
-<h3>Mes matieres : </h3>
 
-<table class="table table-dark">
-  <thead>
-    <tr>
-      <th scope="col">Numero</th>
-      <th scope="col">Nom</th>
-      <th scope="col">Coiefficient</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mathématiques</td>
-      <td>9</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Physiques</td>
-      <td>8</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Sciences Naturelles</td>
-      <td>6</td>
-    </tr>
-  </tbody>
-</table>
+{% if is_granted("ROLE_PROF") %}
+{% include 'matiere/index.html.twig' %}
 
 
         {% set horaires = [
@@ -162,12 +171,13 @@
   </div>
 </div>
 
-
-{##############################       Notes Modales :          ######################}
-<!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#notesModal">
   Voir les notes
 </button>
+{% endif %}
+
+{##############################       Notes Modales :          ######################}
+<!-- Button trigger modal -->
 
 <!-- Modal -->
 <div class="modal fade" id="notesModal" tabindex="-1" role="dialog" aria-labelledby="notesModalLabel" aria-hidden="true">

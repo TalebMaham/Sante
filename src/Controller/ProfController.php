@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Repository\MatiereRepository;
+use App\Repository\AnalyseRepository;
 use App\Repository\NoteRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,7 +17,7 @@ class ProfController extends AbstractController
 {
     #[Route('/eleves', name: 'app_prof')]
  
-    public function index(Request $request, UserRepository $userRepository, NoteRepository $noteRepository, MatiereRepository $matiereRepository): Response
+    public function index(Request $request, UserRepository $userRepository, NoteRepository $noteRepository, AnalyseRepository $analyseRepository): Response
     {
          // Vérifiez si l'utilisateur est authentifié
          if ($this->isGranted('ROLE_STUDENT')) {
@@ -29,14 +29,13 @@ class ProfController extends AbstractController
             // Redirigez vers la page de connexion
             $eleves = $userRepository->findByRole("ROLE_STUDENT"); 
             $notes = $noteRepository->findAll(); 
-            $matiers = $matiereRepository->findAll(); 
+            $analyses = $analyseRepository->findAll(); 
   
 
         return $this->render('prof/index.html.twig', [
-            'controller_name' => 'ProfController',
             'eleves' => $eleves,
             'notes' => $notes,
-            'matieres' => $matiers,
+            'analyses' => $analyses,
             'user'=> $this->getUser()
         ]);
         
